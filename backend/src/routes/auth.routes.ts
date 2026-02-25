@@ -6,6 +6,6 @@ import { asyncHandler } from "../utils/asyncHandler";
 const router = Router();
 
 router.get("/me", protectRoute, asyncHandler(getMe));
-router.get("/callback", protectRoute, asyncHandler(authCallBack));
+router.post("/callback", protectRoute, asyncHandler(authCallBack));
 
 export { router as AuthRoutes };
