@@ -8,11 +8,11 @@ import { Message } from "../models/Message.model";
 export const onlineUsersMap = new Map<string, string>();
 
 export const initializeSocket = (httpServer: httpServer) => {
+  const allowedOrigins = [process.env.FRONTEND_UR!, "http://localhost:8081"];
   const io = new Server(httpServer, {
     cors: {
-      origin: process.env.FRONTEND_URL,
+      origin: allowedOrigins,
       methods: ["GET", "POST"],
-      credentials: true,
     },
   });
   io.use(async (socket, next) => {
