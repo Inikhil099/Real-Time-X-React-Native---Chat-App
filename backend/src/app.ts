@@ -18,6 +18,10 @@ app.use(
   }),
 );
 
+app.get("/health", (req, res) => {
+  return res.status(200).json({ status: "ok", msg: "Server is running" });
+});
+
 app.use("/api/auth", AuthRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
