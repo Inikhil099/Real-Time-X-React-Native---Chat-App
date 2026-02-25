@@ -14,11 +14,11 @@ function useAuthSocial() {
     try {
       const { createdSessionId, setActive } = await startSSOFlow({
         strategy,
-        redirectUrl: "exp://192.168.31.157:8081",
+        redirectUrl: "exp://872mvdk-anonymous-8081.exp.direct",
       });
 
       if (!createdSessionId || !setActive) {
-        Alert.alert("Sign is not compeleted. Try Again");
+        Alert.alert("Sign is not compeleted. Try Again from use social auth");
         return;
       }
       await setActive({ session: createdSessionId });

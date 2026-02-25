@@ -2,7 +2,7 @@ import { useAuth } from "@clerk/clerk-expo";
 import axios from "axios";
 import { useEffect } from "react";
 
-const API_URL = "http://localhost:3000/api";
+const API_URL = "https://real-time-x-react-native-chat-app.onrender.com/api";
 
 const api = axios.create({
   baseURL: API_URL,
