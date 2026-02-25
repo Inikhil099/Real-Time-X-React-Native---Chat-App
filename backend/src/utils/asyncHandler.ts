@@ -1,6 +1,5 @@
 import type { Request, Response } from "express";
 export function asyncHandler(cb: Function) {
-  console.log("inside asynchandler")
   return async function (req: Request, res: Response) {
     try {
       const result = await cb(req, res);
