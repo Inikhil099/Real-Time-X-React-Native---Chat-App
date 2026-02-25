@@ -18,7 +18,7 @@ app.use(
   }),
 );
 
-app.get("/health", (req, res) => {
+app.get("/api/health", (req, res) => {
   console.log(req);
   console.log("inside health route");
   return res.status(200).json({ status: "ok", msg: "Server is running" });
