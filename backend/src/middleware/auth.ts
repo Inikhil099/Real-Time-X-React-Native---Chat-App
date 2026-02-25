@@ -13,7 +13,8 @@ export const protectRoute = [
       const user = await User.findOne({ clerkId: userId });
       if (!user) return res.status(400).send("User not found");
       console.log("this is use", user);
-      req._id = user._id.toString();
+      console.log("new req.user");
+      req._id = user._id;
       console.log("passing controll to the controller");
       next();
     } catch (error) {

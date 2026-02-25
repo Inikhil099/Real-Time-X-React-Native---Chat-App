@@ -1,7 +1,5 @@
 import { useAuthCallback } from "@/hooks/useAuth";
-import { useApi } from "@/lib/axios";
 import { useAuth, useUser } from "@clerk/clerk-expo";
-import axios from "axios";
 import { useEffect, useRef } from "react";
 import { Alert } from "react-native";
 
@@ -10,17 +8,8 @@ const AuthSync = () => {
   const { user } = useUser();
   const { mutate: syncUser } = useAuthCallback();
   const hasSynced = useRef(false);
-  const api = useApi();
   useEffect(() => {
     if (isSignedIn && user && !hasSynced.current) {
-      Alert.alert("Making req to health route");
-      axios
-        .get(
-          `https://real-time-x-react-native-chat-app.onrender.com/api/health`,
-        )
-        .then((e) => {
-          console.log(e.data);
-        });
       hasSynced.current = true;
       syncUser(undefined, {
         onSuccess: (data) => {
