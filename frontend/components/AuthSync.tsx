@@ -10,12 +10,17 @@ const AuthSync = () => {
   const { user } = useUser();
   const { mutate: syncUser } = useAuthCallback();
   const hasSynced = useRef(false);
+  const api = useApi();
   useEffect(() => {
     if (isSignedIn && user && !hasSynced.current) {
-      const api = useApi();
-      axios.get(`${api}/health`).then((e) => {
-        console.log(e.data);
-      });
+      Alert.alert("Making req to health route");
+      axios
+        .get(
+          `https://real-time-x-react-native-chat-app.onrender.com/api/health`,
+        )
+        .then((e) => {
+          console.log(e.data);
+        });
       hasSynced.current = true;
       syncUser(undefined, {
         onSuccess: (data) => {

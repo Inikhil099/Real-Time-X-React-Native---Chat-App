@@ -15,9 +15,12 @@ export async function authCallBack(req: Request, res: Response) {
   if (!userId) return res.status(400).send("Unauthorized");
 
   let user = await User.findOne({ clerkId: userId });
-  if (!user) {
-    const clerkUser = await clerkClient.users.getUser(userId);
+  console.log("this is user inside callback handler", user);
 
+  if (!user) {
+    console.log("user not found creating new");
+    const clerkUser = await clerkClient.users.getUser(userId);
+    console.log("this is clerk user", clerkUser);
     user = await User.create({
       clerkId: userId,
       name: clerkUser.firstName
