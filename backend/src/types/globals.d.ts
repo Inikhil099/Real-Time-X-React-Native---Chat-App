@@ -5,7 +5,7 @@ import type { Socket } from "socket.io";
 declare global {
   namespace Express {
     interface Request {
-      _id?: any;
+      _id?: string;
     }
   }
 }
