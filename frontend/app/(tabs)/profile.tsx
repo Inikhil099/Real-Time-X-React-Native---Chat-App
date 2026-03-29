@@ -11,9 +11,8 @@ const ProfileTab = () => {
     >
       <Text className="text-white">Profile</Text>
       <Pressable
-        className="mt-4 bg-red-600 px-4 py-2"
+        className="mt-40 bg-red-600 px-4 py-2"
         onPress={() => signOut()}
-        disabled={false}
       >
         <Text> Sign out</Text>
       </Pressable>

@@ -14,7 +14,7 @@ function useAuthSocial() {
     try {
       const { createdSessionId, setActive } = await startSSOFlow({
         strategy,
-        redirectUrl: "exp://192.168.31.159:8081",
+        redirectUrl: "exp://192.168.31.158:8081",
       });
 
       if (!createdSessionId || !setActive) {
