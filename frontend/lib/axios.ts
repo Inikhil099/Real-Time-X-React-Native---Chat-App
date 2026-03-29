@@ -54,13 +54,13 @@
 //   return api;
 // };
 
-
 import axios from "axios";
 import * as Sentry from "@sentry/react-native";
 import { useAuth } from "@clerk/clerk-expo";
 import { useCallback } from "react";
 
-const API_URL = "https://real-time-x-react-native-chat-app.onrender.com/api";
+// const API_URL = "https://real-time-x-react-native-chat-app.onrender.com/api";
+const API_URL = "http://13.201.10.108:3000/api";
 
 const api = axios.create({
   baseURL: API_URL,
@@ -75,7 +75,11 @@ api.interceptors.response.use(
       Sentry.logger.error(
         Sentry.logger
           .fmt`API request failed: ${error.config?.method?.toUpperCase()} ${error.config?.url}`,
-        { status: error.response.status, endpoint: error.config?.url, method: error.config?.method }
+        {
+          status: error.response.status,
+          endpoint: error.config?.url,
+          method: error.config?.method,
+        },
       );
     } else if (error.request) {
       Sentry.logger.warn("API request failed - no response", {
@@ -84,7 +88,7 @@ api.interceptors.response.use(
       });
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export const useApi = () => {
@@ -95,10 +99,13 @@ export const useApi = () => {
       const token = await getToken();
       return api.request<T>({
         ...config,
-        headers: { ...config.headers, ...(token && { Authorization: `Bearer ${token}` }) },
+        headers: {
+          ...config.headers,
+          ...(token && { Authorization: `Bearer ${token}` }),
+        },
       });
     },
-    [getToken]
+    [getToken],
   );
 
   return { api, apiWithAuth };

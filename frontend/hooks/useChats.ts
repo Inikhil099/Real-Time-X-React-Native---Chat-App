@@ -9,7 +9,7 @@ export const useChats = () => {
     queryFn: async (): Promise<Chat[]> => {
       const { data } = await apiWithAuth<Chat[]>({
         method: "GET",
-        url: "/chats",
+        url: "/chat",
       });
       return data;
     },
