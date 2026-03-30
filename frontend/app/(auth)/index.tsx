@@ -11,6 +11,7 @@ import { Image } from "expo-image";
 import { Ionicons } from "@expo/vector-icons";
 import useAuthSocial from "@/hooks/useSocialAuth";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { LinearGradient } from "expo-linear-gradient";
 
 const { height, width } = Dimensions.get("window");
 
@@ -18,7 +19,14 @@ const AuthScreen = () => {
   const { handleSocialAuth, loadingStrategy } = useAuthSocial();
   return (
     <View className="flex-1 bg-surface-dark">
-      <View className="absolute inset-0 overflow-hidden"></View>
+      <View className="absolute inset-0 overflow-hidden">
+        <LinearGradient
+          colors={["#0D0D0F", "#1A1A2E", "#4C1D95", "#0D0D0F"]}
+          style={{ position: "absolute", width: "100%", height: "100%" }}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+        />
+      </View>
       <SafeAreaView className="flex-1">
         <View className="items-center pt-10">
           <Image
@@ -26,7 +34,7 @@ const AuthScreen = () => {
             style={{ width: 100, height: 100, marginVertical: -20 }}
             contentFit="contain"
           />
-          <Text className="text-4xl font-bold text-primary font-serif tracking-wider">
+          <Text className="text-4xl font-bold text-[#7e22ce] font-serif tracking-wider">
             Real Time X
           </Text>
         </View>

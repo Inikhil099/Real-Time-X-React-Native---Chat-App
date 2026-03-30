@@ -15,7 +15,7 @@ import { Chat } from "@/types";
 
 const ChatsTab = () => {
   const router = useRouter();
-  const { data: chats, isLoading, error ,refetch} = useChats();
+  const { data: chats, isLoading, error, refetch } = useChats();
   if (isLoading) {
     return (
       <View className="flex-1 bg-surface items-center justify-center">
@@ -28,7 +28,10 @@ const ChatsTab = () => {
     return (
       <View className="flex-1 bg-surface items-center justify-center">
         <Text className="text-red-500 text-3xl">Failed to load chats</Text>
-        <Pressable onPress={()=>refetch()} className="mt-4 px-4 py-2 bg-primary rounded-lg">
+        <Pressable
+          onPress={() => refetch()}
+          className="mt-4 px-4 py-2 bg-[#7C3AED] rounded-lg"
+        >
           <Text className="text-foreground">Retry</Text>
         </Pressable>
       </View>
@@ -37,14 +40,14 @@ const ChatsTab = () => {
 
   const handleChatPress = (chat: Chat) => {
     router.push({
-      pathname:"/chat/[id]",
-      params:{
-        id:chat._id,
-        participant:chat.participant._id,
-        name:chat.participant.name,
-        avatar:chat.participant.avatar
-      }
-    })
+      pathname: "/chat/[id]",
+      params: {
+        id: chat._id,
+        participant: chat.participant._id,
+        name: chat.participant.name,
+        avatar: chat.participant.avatar,
+      },
+    });
   };
   return (
     <View className="flex-1 bg-surface">

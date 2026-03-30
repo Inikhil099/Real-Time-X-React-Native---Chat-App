@@ -14,14 +14,12 @@ const AuthSync = () => {
       hasSynced.current = true;
       syncUser(undefined, {
         onSuccess: (data) => {
-          Alert.alert("user synced with backend", data.name);
           Sentry.logger.info(
             Sentry.logger.fmt`User synced with backend:${data.name}`,
             { userId: user.id, userName: data.name },
           );
         },
         onError: (error) => {
-          Alert.alert(`error while syncing db ${error}`);
           Sentry.logger.error("failed to sync user with backend", {
             userId: user.id,
             error: error instanceof Error ? error.message : String(error),

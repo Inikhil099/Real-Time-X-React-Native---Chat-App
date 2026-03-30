@@ -6,6 +6,7 @@ import { ClerkProvider } from "@clerk/clerk-expo";
 import AuthSync from "@/components/AuthSync";
 import { StatusBar } from "expo-status-bar";
 import * as Sentry from "@sentry/react-native";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 Sentry.init({
   dsn: "https://98d93dedce1229a70f7a0116c4b9e48d@o4510958681325568.ingest.us.sentry.io/4510958692270080",
@@ -36,20 +37,22 @@ const queryClient = new QueryClient();
 
 export default Sentry.wrap(function RootLayout() {
   return (
-    <ClerkProvider tokenCache={tokenCache}>
-      <QueryClientProvider client={queryClient}>
-        <AuthSync />
-        <StatusBar style="light" />
-        <Stack
-          screenOptions={{
-            headerShown: false,
-            contentStyle: { backgroundColor: "#0D0D0F" },
-          }}
-        >
-          <Stack.Screen name="(auth)" options={{ animation: "fade" }} />
-          <Stack.Screen name="(tabs)" options={{ animation: "fade" }} />
-        </Stack>
-      </QueryClientProvider>
-    </ClerkProvider>
+    <SafeAreaProvider style={{ flex: 1 }}>
+      <ClerkProvider tokenCache={tokenCache}>
+        <QueryClientProvider client={queryClient}>
+          <AuthSync />
+          <StatusBar style="light" />
+          <Stack
+            screenOptions={{
+              headerShown: false,
+              contentStyle: { backgroundColor: "#0D0D0F" },
+            }}
+          >
+            <Stack.Screen name="(auth)" options={{ animation: "fade" }} />
+            <Stack.Screen name="(tabs)" options={{ animation: "fade" }} />
+          </Stack>
+        </QueryClientProvider>
+      </ClerkProvider>
+    </SafeAreaProvider>
   );
 });
