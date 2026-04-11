@@ -58,9 +58,7 @@ import axios from "axios";
 import * as Sentry from "@sentry/react-native";
 import { useAuth } from "@clerk/clerk-expo";
 import { useCallback } from "react";
-
-// const API_URL = "https://real-time-x-react-native-chat-app.onrender.com/api";
-const API_URL = "http://13.201.10.108:3000/api";
+const API_URL = "http://3.111.197.208:3000/api";
 
 const api = axios.create({
   baseURL: API_URL,

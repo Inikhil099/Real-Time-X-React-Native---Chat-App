@@ -12,6 +12,8 @@ import { Ionicons } from "@expo/vector-icons";
 import useAuthSocial from "@/hooks/useSocialAuth";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
+import AnimatedOrb from "@/components/AnimatedOrb";
+import { BlurView } from "expo-blur";
 
 const { height, width } = Dimensions.get("window");
 
@@ -26,6 +28,33 @@ const AuthScreen = () => {
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
         />
+        <AnimatedOrb
+          colors={["#a855f7", "#7e22ce"]}
+          duration={4000}
+          size={300}
+          initialX={-80}
+          initialY={height * 0.1}
+        />
+
+        <AnimatedOrb
+          colors={["#a855f7", "#7e22ce"]}
+          duration={5000}
+          size={250}
+          initialX={width - 100}
+          initialY={height * 0.3}
+        />
+        <AnimatedOrb
+          colors={["#a855f7", "#7e22ce"]}
+          duration={3500}
+          size={200}
+          initialX={width * 0.3}
+          initialY={height * 0.6}
+        />
+        <BlurView
+          intensity={70}
+          tint="dark"
+          style={{ position: "absolute", width: "100%", height: "100%" }}
+        ></BlurView>
       </View>
       <SafeAreaView className="flex-1">
         <View className="items-center pt-10">
@@ -41,7 +70,7 @@ const AuthScreen = () => {
         {/* center section */}
         <View className="flex-1 justify-center items-center px-6">
           <Image
-            source={require("../../assets/images/auth.png")}
+            source={require("../../assets/images/auth2.png")}
             style={{ width: width - 48, height: height * 0.3 }}
             contentFit="contain"
           />

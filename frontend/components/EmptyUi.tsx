@@ -31,7 +31,7 @@ function EmptyUi({
       ) : null}
       {buttonLabel && onPressButton ? (
         <Pressable
-          className="mt-6 bg-primary px-6 py-3 rounded-full"
+          className="mt-6 bg-[#8B5CF6] px-6 py-3 rounded-full"
           onPress={onPressButton}
         >
           <Text className="text-surface-dark font-semibold">{buttonLabel}</Text>
