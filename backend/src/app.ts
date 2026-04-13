@@ -5,7 +5,7 @@ import { messageRoutes } from "./routes/message.routes";
 import { userRoutes } from "./routes/user.routes";
 import { clerkMiddleware } from "@clerk/express";
 import cors from "cors";
-const allowedOrigins = [process.env.FRONTEND_UR!, "http://localhost:8081"];
+const allowedOrigins = [process.env.FRONTEND_URL!, "http://localhost:8081"];
 
 const app = express();
 

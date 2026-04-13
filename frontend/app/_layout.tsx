@@ -40,7 +40,7 @@ export default Sentry.wrap(function RootLayout() {
     <SafeAreaProvider style={{ flex: 1 }}>
       <ClerkProvider tokenCache={tokenCache}>
         <QueryClientProvider client={queryClient}>
-          <AuthSync />
+          {/* <AuthSync /> */}
           <StatusBar style="light" />
           <Stack
             screenOptions={{
