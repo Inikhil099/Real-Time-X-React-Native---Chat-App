@@ -15,7 +15,7 @@ const ChatItem = ({ chat, onPress }: { chat: Chat; onPress: () => void }) => {
     >
       <View className="relative">
         <Image
-          source={{ uri: participant.avatar }}
+          source={{ uri: participant?.avatar }}
           style={{ width: 56, height: 56, borderRadius: 999 }}
         />
         {isOnline && (
@@ -27,7 +27,7 @@ const ChatItem = ({ chat, onPress }: { chat: Chat; onPress: () => void }) => {
           <Text
             className={`text-base font-medium ${hasUnread ? "text-primary" : "text-foreground"}`}
           >
-            {participant.name}
+            {participant?.name}
           </Text>
           <View className="flex-row items-center gap-2">
             {hasUnread && (

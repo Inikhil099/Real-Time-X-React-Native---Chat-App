@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import Animated, {
-  useSharedValue ,
+  useSharedValue,
   useAnimatedStyle,
   withRepeat,
   withSequence,

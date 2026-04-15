@@ -54,7 +54,7 @@ const AuthScreen = () => {
           intensity={70}
           tint="dark"
           style={{ position: "absolute", width: "100%", height: "100%" }}
-        ></BlurView>
+        />
       </View>
       <SafeAreaView className="flex-1">
         <View className="items-center pt-10">
