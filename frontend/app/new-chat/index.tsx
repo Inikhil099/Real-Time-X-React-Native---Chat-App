@@ -10,14 +10,17 @@ import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { useGetOrCreateChats, useUsers } from "@/hooks/useUsers";
 import { Chat, User } from "@/types";
 import UserItem from "@/components/UserItem";
+import { useGetOrCreateChats } from "@/hooks/useChats";
+import { useUsers } from "@/hooks/useUsers";
+import { useSocketStore } from "@/lib/socket";
 
 const NewChatScreen = () => {
   const [searchQuery, setsearchQuery] = useState("");
   const { data: allUsers, isLoading } = useUsers();
   const { mutate, isPending: isCreatingChat } = useGetOrCreateChats();
+  const { onlineUsers } = useSocketStore();
   const users = allUsers?.filter((user) => {
     if (!searchQuery.trim()) return true;
     const query = searchQuery.toLowerCase();
@@ -29,16 +32,19 @@ const NewChatScreen = () => {
 
   const handleUserSelect = (user: User) => {
     mutate(user._id, {
-      onSuccess: (chat: any) => {
-        router.push({
-          pathname: "/chat/[id]",
-          params: {
-            id: chat._id,
-            participant: chat.participant._id,
-            name: chat.participant.name,
-            avatar: chat.participant.avatar,
-          },
-        });
+      onSuccess: (chat) => {
+        router.dismiss();
+        setTimeout(() => {
+          router.push({
+            pathname: "/chat/[id]",
+            params: {
+              id: chat._id,
+              participant: chat.participant._id,
+              name: chat.participant.name,
+              avatar: chat.participant.avatar,
+            },
+          });
+        }, 100);
       },
     });
   };
@@ -82,7 +88,7 @@ const NewChatScreen = () => {
           <View className="flex-1 bg-surface">
             {isCreatingChat || isLoading ? (
               <View className="flex-1 items-center">
-                <ActivityIndicator size={"large"} color={"#F4A261"} />
+                <ActivityIndicator size={"large"} color={"#8B5CF6"} />
               </View>
             ) : !users || users.length === 0 ? (
               <View className="flex-1 items-center justify-center px-5">
@@ -109,7 +115,7 @@ const NewChatScreen = () => {
                   <UserItem
                     key={user._id}
                     user={user}
-                    isOnline={true}
+                    isOnline={onlineUsers.has(user._id)}
                     onPress={() => handleUserSelect(user)}
                   />
                 ))}

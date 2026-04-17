@@ -28,10 +28,7 @@ export async function getOrCreateChats(req: Request, res: Response) {
     return res.status(400).send("Participant ID is required");
   }
 
-  if (
-    typeof participantId === "string" &&
-    !Types.ObjectId.isValid(participantId)
-  ) {
+  if (!Types.ObjectId.isValid(participantId as string)) {
     return res.status(400).send("Invalid participant ID");
   }
   if (participantId === req._id) {
@@ -53,7 +50,7 @@ export async function getOrCreateChats(req: Request, res: Response) {
   );
   return res.status(200).json({
     _id: chat._id,
-    participants: otherParticipant ?? null,
+    participant: otherParticipant ?? null,
     lastMessage: chat.lastMessage,
     lastMessageAt: chat.lastMessageAt,
     createdAt: chat.createdAt,

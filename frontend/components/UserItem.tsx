@@ -31,7 +31,7 @@ const UserItem = ({ user, isOnline, onPress }: UserItemProps) => {
             {user.name}
           </Text>
           {isOnline && (
-            <Text className="text-xs text-primary font-medium">Online</Text>
+            <Text className="text-xs text-[#8B5CF6] font-medium">Online</Text>
           )}
         </View>
         <Text className="text-xs text-subtle-foreground mt-0.5">
