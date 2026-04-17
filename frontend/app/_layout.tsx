@@ -43,7 +43,7 @@ export default Sentry.wrap(function RootLayout() {
         <QueryClientProvider client={queryClient}>
           <AuthSync />
           <SocketConnection />
-          <StatusBar style="light" />
+          <StatusBar style="dark" />
           <Stack
             screenOptions={{
               headerShown: false,

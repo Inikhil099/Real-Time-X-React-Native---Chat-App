@@ -9,7 +9,6 @@ const httpServer = createServer(app);
 initializeSocket(httpServer)
 
 ConnectDb().then(() => {
-  console.log(process.env.MONGODB_URI)
   console.log("db connected");
   httpServer.listen(PORT, () => {
     console.log("app running on port http://localhost:" + PORT);

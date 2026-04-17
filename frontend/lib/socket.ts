@@ -40,18 +40,15 @@ export const useSocketStore = create<SocketState>((set, get) => {
       if (existingSocket) existingSocket.disconnect();
       const socket = io(SOCKET_URL, { auth: { token } });
       socket.on("connect", () => {
-        console.log("socket connected with ", socket.id);
         set({ isConnected: true });
       });
       socket.on("disconnect", () => {
-        console.log("disconnected with socket");
         set({ isConnected: false });
       });
 
       socket.on(
         "online-users",
         ({ onlineUsers }: { onlineUsers: string[] }) => {
-          console.log("online users received", onlineUsers);
           set({ onlineUsers: new Set(onlineUsers) });
         },
       );

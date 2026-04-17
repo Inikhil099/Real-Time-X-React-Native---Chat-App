@@ -122,7 +122,6 @@ export const initializeSocket = (httpServer: httpServer) => {
     socket.on("disconnect", () => {
       onlineUsersMap.delete(userId);
       socket.broadcast.emit("user-offline", { userId });
-      console.log("user disconnected with id", socket.id);
     });
   });
   return io;

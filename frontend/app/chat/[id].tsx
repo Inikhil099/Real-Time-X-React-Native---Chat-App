@@ -115,7 +115,7 @@ const ChatDetailsScreen = () => {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-surface" edges={["top", "bottom"]}>
+    <SafeAreaView className="flex-1 bg-surface" edges={["top"]} >
       {/* header with user's info */}
       <View className="flex-row items-center px-4 py-2 bg-surface border-b border-surface-light">
         <Pressable onPress={() => router.back()}>
@@ -154,12 +154,8 @@ const ChatDetailsScreen = () => {
 
       {/* message bar  */}
 
-      <KeyboardAvoidingView
-        className="flex-1"
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        keyboardVerticalOffset={0}
-      >
-        <View className="flex-1 bg-surface">
+      <KeyboardAvoidingView className="flex-1" keyboardVerticalOffset={0}>
+        <View className="flex-1 bg-">
           {isLoading ? (
             <ActivityIndicator size={"large"} color={"#8B5CF6"} />
           ) : !messages || messages.length === 0 ? (
@@ -201,30 +197,30 @@ const ChatDetailsScreen = () => {
           )}
 
           <View className="px-3 pb-3 pt-2 bg-surface border-t border-surface-light">
-            <View className="flex-row items-end bg-surface rounded-3xl px-3 py-1.5 gap-2">
+            <View className="flex-row items-center bg-surface rounded-3xl px-3 py-1.5 gap-2">
               <Pressable className="w-8 h-8 rounded-full items-center justify-center">
                 <Ionicons name="add" size={22} color={"#8B5CF6"} />
               </Pressable>
               <TextInput
                 placeholder="Type a message"
                 placeholderTextColor="#6B6B70"
-                className="flex-1 text-foreground text-sm mb-2"
+                className="flex-1 text-foreground text-sm"
                 multiline
-                style={{ maxHeight: 100 }}
+                style={{ maxHeight: 50 }}
                 value={messageText}
                 onChangeText={handleTyping}
                 onSubmitEditing={handleSend}
                 editable={!isSending}
               />
               <Pressable
-                className="w-8 h-8 rounded-full items-center justify-center bg-[#8B5CF6]"
+                className="w-12 h-12 rounded-full items-center justify-center bg-[#8B5CF6]"
                 onPress={handleSend}
                 disabled={!messageText.trim() || isSending}
               >
                 {isSending ? (
                   <ActivityIndicator size="small" color="#0D0D0F" />
                 ) : (
-                  <Ionicons name="send" size={18} color="#0D0D0F" />
+                  <Ionicons name="send" size={18} color="white" />
                 )}
               </Pressable>
             </View>

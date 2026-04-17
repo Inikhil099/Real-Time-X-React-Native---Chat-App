@@ -27,8 +27,8 @@ const AuthScreen = () => {
           style={{ position: "absolute", width: "100%", height: "100%" }}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
-        />
-        <AnimatedOrb
+        />  
+        {/* <AnimatedOrb
           colors={["#a855f7", "#7e22ce"]}
           duration={4000}
           size={300}
@@ -49,12 +49,12 @@ const AuthScreen = () => {
           size={200}
           initialX={width * 0.3}
           initialY={height * 0.6}
-        />
-        <BlurView
+        /> */}
+        {/* <BlurView
           intensity={70}
           tint="dark"
           style={{ position: "absolute", width: "100%", height: "100%" }}
-        />
+        /> */}
       </View>
       <SafeAreaView className="flex-1">
         <View className="items-center pt-10">
