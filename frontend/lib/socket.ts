@@ -3,8 +3,7 @@ import { io, Socket } from "socket.io-client";
 import { QueryClient } from "@tanstack/react-query";
 import { Chat, Message, MessageSender } from "@/types";
 
-// const SOCKET_URL = "http://15.206.116.127:3000";
-const SOCKET_URL = "http://localhost:3003";
+const SOCKET_URL = "http://15.206.116.127:3000";
 
 interface SocketState {
   socket: Socket | null;

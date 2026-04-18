@@ -2,8 +2,7 @@ import axios from "axios";
 import * as Sentry from "@sentry/react-native";
 import { useAuth } from "@clerk/clerk-expo";
 import { useCallback } from "react";
-// const API_URL = "http://15.206.116.127:3000/api";
-const API_URL = "http://localhost:3003/api";
+const API_URL = "http://15.206.116.127:3000/api";
 
 const api = axios.create({
   baseURL: API_URL,
