@@ -29,19 +29,10 @@ type ChatParams = {
 
 const ChatDetailsScreen = () => {
   const {
-    joinChat,
-    leaveChat,
-    sendMessage,
-    sendTyping,
-    isConnected,
-    onlineUsers,
-    typingUsers,
-  } = useSocketStore();
-  const {
     id: chatId,
-    participantId,
     name,
     avatar,
+    participantId,
   } = useLocalSearchParams<ChatParams>();
 
   const [messageText, setmessageText] = useState("");
@@ -50,10 +41,18 @@ const ChatDetailsScreen = () => {
   const { data: currentUser } = useCurrentUser();
   const { data: messages, isLoading } = useMessages(chatId);
 
+  const {
+    joinChat,
+    leaveChat,
+    sendMessage,
+    sendTyping,
+    isConnected,
+    onlineUsers,
+    typingUsers,
+  } = useSocketStore();
+
   const isOnline = participantId ? onlineUsers.has(participantId) : false;
-  console.log("isonline", isOnline);
   const isTyping = typingUsers.get(chatId) === participantId;
-  console.log("istyping", isTyping);
   const typingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -75,7 +74,7 @@ const ChatDetailsScreen = () => {
   const handleTyping = useCallback(
     (text: string) => {
       setmessageText(text);
-      if (!isConnected && chatId) return;
+      if (!isConnected || !chatId) return;
       if (text.length > 0) {
         sendTyping(chatId, true);
 
@@ -117,7 +116,7 @@ const ChatDetailsScreen = () => {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-surface" edges={["top"]}>
+    <SafeAreaView className="flex-1 bg-surface" edges={["top", "bottom"]}>
       {/* header with user's info */}
       <View className="flex-row items-center px-4 py-2 bg-surface border-b border-surface-light">
         <Pressable onPress={() => router.back()}>
@@ -138,7 +137,7 @@ const ChatDetailsScreen = () => {
               {name}
             </Text>
             <Text
-              className={`text-xs ${isTyping ? "text-green-400" : isOnline ? "text-white" : "text-gray-500"}`}
+              className={`text-xs ${isTyping ? "text-green-400" : "text-gray-500"}`}
             >
               {isTyping ? "typing..." : isOnline ? "Online" : "Offline"}
             </Text>
@@ -157,9 +156,11 @@ const ChatDetailsScreen = () => {
       {/* message bar  */}
 
       <KeyboardAvoidingView className="flex-1" keyboardVerticalOffset={0}>
-        <View className="flex-1 bg-">
+        <View className="flex-1 bg-surface">
           {isLoading ? (
-            <ActivityIndicator size={"large"} color={"#8B5CF6"} />
+            <View className="flex-1 items-center justify-center">
+              <ActivityIndicator size={"large"} color={"#8B5CF6"} />
+            </View>
           ) : !messages || messages.length === 0 ? (
             <EmptyUi
               title="No Messages yet"
@@ -177,7 +178,6 @@ const ChatDetailsScreen = () => {
                 paddingVertical: 12,
                 gap: 8,
               }}
-              showsVerticalScrollIndicator={false}
               onContentSizeChange={() =>
                 scrollViewRef.current?.scrollToEnd({ animated: false })
               }

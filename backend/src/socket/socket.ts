@@ -61,25 +61,25 @@ export const initializeSocket = (httpServer: httpServer) => {
     socket.on(
       "send-message",
       async ({ chatId, text }: { chatId: string; text: string }) => {
-        console.log("message received from someone", chatId, text);
         try {
           const chat = await Chat.findOne({
             _id: chatId,
             participants: userId,
           });
           if (!chat) {
-            return socket.emit("socket-error", { message: "Chat not found" });
+            socket.emit("socket-error", { message: "Chat not found" });
+            return;
           }
 
           const message = await Message.create({
-            chat: chat?._id,
+            chat: chat._id,
             sender: userId,
             text,
           });
 
           chat.lastMessage = message._id;
           chat.lastMessageAt = new Date();
-          await chat?.save();
+          await chat.save();
           await message.populate("sender", "name avatar");
           io.to(`chat:${chatId}`).emit("new-message", message);
 
@@ -93,9 +93,8 @@ export const initializeSocket = (httpServer: httpServer) => {
         }
       },
     );
- 
+
     socket.on("typing", async (data: { chatId: string; isTyping: boolean }) => {
-      console.log("some one is typing", data.chatId, data.isTyping);
       const typingPayload = {
         userId,
         chatId: data.chatId,

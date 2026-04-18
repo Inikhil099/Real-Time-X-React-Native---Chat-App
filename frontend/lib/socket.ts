@@ -69,7 +69,6 @@ export const useSocketStore = create<SocketState>((set, get) => {
       });
 
       socket.on("socket-error", (error: { message: string }) => {
-        console.log("error in socket", error.message);
       });
 
       socket.on("new-message", (message: Message) => {
@@ -81,8 +80,7 @@ export const useSocketStore = create<SocketState>((set, get) => {
           (old) => {
             if (!old) return [message];
             const filtered = old.filter((m) => !m._id.startsWith("temp-"));
-            if (filtered.some(() => message._id === message._id))
-              return filtered;
+            if (filtered.some((m) => m._id === message._id)) return filtered;
             return [...filtered, message];
           },
         );
@@ -95,7 +93,7 @@ export const useSocketStore = create<SocketState>((set, get) => {
                 lastMessage: {
                   _id: message._id,
                   text: message.text,
-                  sender: message.createdAt,
+                  sender: (message.sender as MessageSender)._id,
                   createdAt: message.createdAt,
                 },
                 lastMessageAt: message.createdAt,
@@ -151,16 +149,18 @@ export const useSocketStore = create<SocketState>((set, get) => {
     },
     disconnect: () => {
       const socket = get().socket;
-      // socket?.disconnect();
-      set({
-        socket: null,
-        isConnected: false,
-        onlineUsers: new Set(),
-        typingUsers: new Map(),
-        unreadChats: new Set(),
-        currentChatId: null,
-        queryClient: null,
-      });
+      if (socket) {
+        socket.disconnect();
+        set({
+          socket: null,
+          isConnected: false,
+          onlineUsers: new Set(),
+          typingUsers: new Map(),
+          unreadChats: new Set(),
+          currentChatId: null,
+          queryClient: null,
+        });
+      }
     },
     joinChat: (chatId) => {
       const socket = get().socket;

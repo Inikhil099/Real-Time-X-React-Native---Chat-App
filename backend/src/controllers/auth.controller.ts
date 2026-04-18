@@ -11,7 +11,7 @@ export async function getMe(req: Request, res: Response) {
 
 export async function authCallBack(req: Request, res: Response) {
   const { userId } = getAuth(req);
-  if (!userId) return res.status(400).send("Unauthorized");
+  if (!userId) return res.status(401).json({ message: "Unauthorized" });
 
   let user = await User.findOne({ clerkId: userId });
 

@@ -1,5 +1,4 @@
-import { View, Text } from "react-native";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useAuth } from "@clerk/clerk-expo";
 import { useQueryClient } from "@tanstack/react-query";
 import { useSocketStore } from "@/lib/socket";

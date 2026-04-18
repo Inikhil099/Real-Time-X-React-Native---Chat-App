@@ -7,7 +7,6 @@ import Animated, {
   withTiming,
   Easing,
 } from "react-native-reanimated";
-// import Animated from "react-native-reanimated"
 import { LinearGradient } from "expo-linear-gradient";
 
 type AnimatedOrbProps = {

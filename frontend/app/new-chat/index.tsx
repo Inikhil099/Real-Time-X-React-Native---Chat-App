@@ -31,15 +31,14 @@ const NewChatScreen = () => {
     );
   });
 
-
-// todo 
+  // todo
 
   // const handleSearch = () => {
   //   if (debouceRef.current) {
   //     clearTimeout(debouceRef);
   //   }
   //   debouceRef.current = setTimeout(() => {
-      
+
   //   }, 2000);
   // };
 
@@ -52,7 +51,7 @@ const NewChatScreen = () => {
             pathname: "/chat/[id]",
             params: {
               id: chat._id,
-              participant: chat.participant._id,
+              participantId: chat.participant._id,
               name: chat.participant.name,
               avatar: chat.participant.avatar,
             },

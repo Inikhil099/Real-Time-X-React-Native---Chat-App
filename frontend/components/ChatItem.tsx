@@ -9,7 +9,7 @@ const ChatItem = ({ chat, onPress }: { chat: Chat; onPress: () => void }) => {
   const { onlineUsers, typingUsers, unreadChats } = useSocketStore();
 
   const isOnline = onlineUsers.has(participant._id);
-  const isTyping = typingUsers.has(chat._id);
+  const isTyping = typingUsers.get(chat._id) === participant._id;
   const hasUnread = unreadChats.has(chat._id);
   return (
     <Pressable
@@ -27,27 +27,26 @@ const ChatItem = ({ chat, onPress }: { chat: Chat; onPress: () => void }) => {
       </View>
       <View className="flex-1 ml-4">
         <View className="flex-row items-center justify-between">
-          <Text
-            className={`text-base font-medium ${hasUnread ? "text-primary" : "text-foreground"}`}
-          >
+          <Text className={`text-base font-medium text-foreground`}>
             {participant?.name}
           </Text>
           <View className="flex-row items-center gap-2">
             {hasUnread && (
-              <View className="w-2.5 h-2.5 bg-primary rounded-full" />
+              <View className="p-1 bg-[#8B5CF6] rounded-full">
+                {Array.from(unreadChats).length}
+              </View>
             )}
-            <Text>
-              {chat.lastMessageAt
-                ? formatDistanceToNow(new Date(chat.lastMessageAt), {
-                    addSuffix: false,
-                  })
-                : ""}
+            <Text className="text-white">
+              {chat.lastMessageAt &&
+                formatDistanceToNow(new Date(chat.lastMessageAt), {
+                  addSuffix: false,
+                })}
             </Text>
           </View>
         </View>
         <View className="flex-row items-center justify-between mt-1">
           {isTyping ? (
-            <Text className="text-sm text-primary italic">typing...</Text>
+            <Text className="text-sm text-[#8B5CF6] italic">typing...</Text>
           ) : (
             <Text
               className={`text-sm flex-1 mr-3 ${hasUnread ? "text-foreground font-medium" : "text-subtle-foreground"}`}
