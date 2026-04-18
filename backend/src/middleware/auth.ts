@@ -7,7 +7,6 @@ export const protectRoute = [
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { userId } = getAuth(req);
-      // if (!userId) return res.status(401).send("Unauthorized - Invalid token");
       const user = await User.findOne({ clerkId: userId });
       if (!user) return res.status(401).send("User not found");
       req._id = user._id.toString();

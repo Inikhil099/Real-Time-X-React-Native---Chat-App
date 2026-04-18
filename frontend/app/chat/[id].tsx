@@ -51,7 +51,9 @@ const ChatDetailsScreen = () => {
   const { data: messages, isLoading } = useMessages(chatId);
 
   const isOnline = participantId ? onlineUsers.has(participantId) : false;
+  console.log("isonline", isOnline);
   const isTyping = typingUsers.get(chatId) === participantId;
+  console.log("istyping", isTyping);
   const typingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -115,7 +117,7 @@ const ChatDetailsScreen = () => {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-surface" edges={["top"]} >
+    <SafeAreaView className="flex-1 bg-surface" edges={["top"]}>
       {/* header with user's info */}
       <View className="flex-row items-center px-4 py-2 bg-surface border-b border-surface-light">
         <Pressable onPress={() => router.back()}>

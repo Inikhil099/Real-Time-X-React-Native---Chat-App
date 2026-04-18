@@ -6,7 +6,7 @@ import {
   ActivityIndicator,
   ScrollView,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -19,6 +19,7 @@ import { useSocketStore } from "@/lib/socket";
 const NewChatScreen = () => {
   const [searchQuery, setsearchQuery] = useState("");
   const { data: allUsers, isLoading } = useUsers();
+  // const debouceRef = useRef<any>(null);
   const { mutate, isPending: isCreatingChat } = useGetOrCreateChats();
   const { onlineUsers } = useSocketStore();
   const users = allUsers?.filter((user) => {
@@ -29,6 +30,18 @@ const NewChatScreen = () => {
       user.email.toLowerCase().includes(query)
     );
   });
+
+
+// todo 
+
+  // const handleSearch = () => {
+  //   if (debouceRef.current) {
+  //     clearTimeout(debouceRef);
+  //   }
+  //   debouceRef.current = setTimeout(() => {
+      
+  //   }, 2000);
+  // };
 
   const handleUserSelect = (user: User) => {
     mutate(user._id, {
@@ -75,7 +88,7 @@ const NewChatScreen = () => {
               <Ionicons name="search" size={18} color={"#6B6B70"} />
               <TextInput
                 className="flex-1 text-foreground text-sm"
-                placeholder="Search Users"
+                placeholder="Search Users with Name of Email"
                 placeholderTextColor={"#6B6B70"}
                 value={searchQuery}
                 onChangeText={setsearchQuery}

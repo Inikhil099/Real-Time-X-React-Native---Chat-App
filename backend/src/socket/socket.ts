@@ -37,7 +37,7 @@ export const initializeSocket = (httpServer: httpServer) => {
   });
 
   io.on("connection", (socket: Socket) => {
-    const userId = socket.userId!;
+    const userId = socket.userId as string;
     socket.emit("online-users", {
       onlineUsers: Array.from(onlineUsersMap.keys()),
     });
@@ -61,6 +61,7 @@ export const initializeSocket = (httpServer: httpServer) => {
     socket.on(
       "send-message",
       async ({ chatId, text }: { chatId: string; text: string }) => {
+        console.log("message received from someone", chatId, text);
         try {
           const chat = await Chat.findOne({
             _id: chatId,
@@ -92,32 +93,30 @@ export const initializeSocket = (httpServer: httpServer) => {
         }
       },
     );
+ 
+    socket.on("typing", async (data: { chatId: string; isTyping: boolean }) => {
+      console.log("some one is typing", data.chatId, data.isTyping);
+      const typingPayload = {
+        userId,
+        chatId: data.chatId,
+        isTyping: data.isTyping,
+      };
+      socket.to(`chat:${data.chatId}`).emit("typing", typingPayload);
 
-    socket.on(
-      "typing",
-      async (data: { userId: string; chatId: string; isTyping: boolean }) => {
-        const typingPayload = {
-          userId,
-          chatId: data.chatId,
-          isTyping: data.isTyping,
-        };
-        socket.to(`chat:${data.chatId}`).emit("typing", typingPayload);
-
-        try {
-          const chat = await Chat.findById(data.chatId);
-          if (chat) {
-            const otherParticipantId = chat.participants.find(
-              (p) => p.toString() !== userId,
-            );
-            if (otherParticipantId) {
-              socket
-                .to(`user:${otherParticipantId}`)
-                .emit("typing", typingPayload);
-            }
+      try {
+        const chat = await Chat.findById(data.chatId);
+        if (chat) {
+          const otherParticipantId = chat.participants.find(
+            (p) => p.toString() !== userId,
+          );
+          if (otherParticipantId) {
+            socket
+              .to(`user:${otherParticipantId}`)
+              .emit("typing", typingPayload);
           }
-        } catch (error) {}
-      },
-    );
+        }
+      } catch (error) {}
+    });
 
     socket.on("disconnect", () => {
       onlineUsersMap.delete(userId);
