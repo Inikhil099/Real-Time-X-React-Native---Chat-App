@@ -16,6 +16,6 @@ ConnectDb().then(() => {
       const f = await fetch(`${process.env.ORIGIN}/health`);
       const d = await f.text();
       console.log(d);
-    }, 1000);
+    }, 1000 * 60 * 10);
   });
 });
