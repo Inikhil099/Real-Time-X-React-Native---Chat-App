@@ -1,7 +1,7 @@
 import { useSSO } from "@clerk/clerk-expo";
 import { useState } from "react";
 import { Alert } from "react-native";
-import {makeRedirectUri} from "expo-auth-session"
+import { makeRedirectUri } from "expo-auth-session";
 
 function useAuthSocial() {
   const [loadingStrategy, setloadingStrategy] = useState<string | null>(null);
@@ -15,8 +15,7 @@ function useAuthSocial() {
     try {
       const { createdSessionId, setActive } = await startSSOFlow({
         strategy,
-        redirectUrl: makeRedirectUri({scheme:"frontend"}),
-        // // redirectUrl: "exp://192.168.31.159:8081",
+        redirectUrl: makeRedirectUri(),
       });
 
       if (!createdSessionId || !setActive) {

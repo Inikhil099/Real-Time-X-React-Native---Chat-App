@@ -155,7 +155,11 @@ const ChatDetailsScreen = () => {
 
       {/* message bar  */}
 
-      <KeyboardAvoidingView className="flex-1" keyboardVerticalOffset={0}>
+      <KeyboardAvoidingView
+        className="flex-1 "
+        keyboardVerticalOffset={0}
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+      >
         <View className="flex-1 bg-surface">
           {isLoading ? (
             <View className="flex-1 items-center justify-center">
@@ -198,7 +202,7 @@ const ChatDetailsScreen = () => {
             </ScrollView>
           )}
 
-          <View className="px-3 pb-3 pt-2 bg-surface border-t border-surface-light">
+          <View className="px-3 pb-3 pt-2  border-t border-surface-light">
             <View className="flex-row items-center bg-surface rounded-3xl px-3 py-1.5 gap-2">
               <Pressable className="w-8 h-8 rounded-full items-center justify-center">
                 <Ionicons name="add" size={22} color={"#8B5CF6"} />
